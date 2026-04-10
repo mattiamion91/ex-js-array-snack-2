@@ -148,16 +148,15 @@ console.log(agesSum / ages.length);
 //funnzione di supporto
 
 const localApi = 'http://localhost:3333'
-
+const endpoints = [2, 13, 7, 21, 19]
 const fetchJson = async (url) => {
     const res = await fetch(url)
     const obj = await res.json()
     return obj
 }
 
-const getBooks = async () => {
+const getBooks = async (ids) => {
     try{
-        const endpoints = [2, 13, 7, 21, 19]
         const promises = endpoints.map(ep=> fetchJson(`${localApi}/books/${ep}`));
         const booksFetched = await Promise.all(promises)
         return booksFetched
@@ -167,7 +166,7 @@ const getBooks = async () => {
 }
 
 //uso la funz
-getBooks()
+getBooks(endpoints)
 .then(b=>console.log(b))
 .catch(err=> console.error(err))
 
@@ -176,10 +175,27 @@ getBooks()
 const areThereAvailableBooks = books.some((b) => b.available === true)
 console.log(areThereAvailableBooks);
 
-const booksByPrice = [...books].sort((a, b) => +a.price - +b.price)
+const booksByPrice = [...books].sort((a, b) => {
+    const priceA = parseFloat(a.price.replace("€", ""))
+    const priceB = parseFloat(b.price.replace("€", ""))
+    return priceA - priceB})
+booksByPrice.sort((a,b)=>{a.available===b.available?0:a.available?1:-1
+})
 console.log(booksByPrice);
+
 
 /*snack7*/
 
-const tagCounts = books.reduce((acc, curr) => { }, 0)
+const tagCounts = books.reduce((acc, curr) => {
+curr.tags.forEach(t=>{
+    if(acc[t]){
+        acc[t]++;
+    }else{
+        acc[t] = 1;
+    }
+});
+return acc
+}, {})
+console.log(tagCounts);
+
 
