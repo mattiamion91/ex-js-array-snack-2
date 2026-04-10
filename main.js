@@ -147,7 +147,7 @@ console.log(agesSum / ages.length);
 
 //funnzione di supporto
 
-/*const localApi = 'http://localhost:3333'
+const localApi = 'http://localhost:3333'
 
 const fetchJson = async (url) => {
     const res = await fetch(url)
@@ -159,8 +159,8 @@ const getBooks = async () => {
     try{
         const endpoints = [2, 13, 7, 21, 19]
         const promises = endpoints.map(ep=> fetchJson(`${localApi}/books/${ep}`));
-        const books = await Promise.all(promises)
-        return books
+        const booksFetched = await Promise.all(promises)
+        return booksFetched
     }catch(error){
         throw new Error(`errore recupero dati: ${error.message}`)
     }
@@ -169,7 +169,7 @@ const getBooks = async () => {
 //uso la funz
 getBooks()
 .then(b=>console.log(b))
-.catch(err=> console.error(err))*/
+.catch(err=> console.error(err))
 
 /*snack6*/
 
