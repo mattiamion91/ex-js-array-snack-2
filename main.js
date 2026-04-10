@@ -95,20 +95,27 @@ console.log(longBooks);
 const longBooksTitles = longBooks.map((b) => b.title)
 console.log(longBooksTitles);
 
+longBooksTitles.forEach(t => console.log(t))
+
 /*snack2*/
 
 const availableBooks = books.filter((b) => b.available === true)
 console.log(availableBooks);
 
 const discountedBooks = availableBooks.map((b) => {
+    const price = parseFloat(b.price.replace('€', ''));
+    const dicountedPrice = (price * .8).toFixed(2)
     return {
         ...b,
-        price: parseFloat(b.price) * 0.80.toFixed(2)
+        price: dicountedPrice + '€'
     }
 });
 console.log(discountedBooks);
 
-const fullPricedBook = discountedBooks.find((b) => b.price % 1 === 0)
+const fullPricedBook = discountedBooks.find((b) => {
+    const price = parseFloat(b.price.replace('€', ''));
+    return price % 1 === 0
+})
 console.log(fullPricedBook);
 
 /*snack3*/
@@ -140,7 +147,7 @@ console.log(agesSum / ages.length);
 
 //funnzione di supporto
 
-const localApi = 'http://localhost:3333'
+/*const localApi = 'http://localhost:3333'
 
 const fetchJson = async (url) => {
     const res = await fetch(url)
@@ -162,5 +169,17 @@ const getBooks = async () => {
 //uso la funz
 getBooks()
 .then(b=>console.log(b))
-.catch(err=> console.error(err))
+.catch(err=> console.error(err))*/
+
+/*snack6*/
+
+const areThereAvailableBooks = books.some((b) => b.available === true)
+console.log(areThereAvailableBooks);
+
+const booksByPrice = [...books].sort((a, b) => +a.price - +b.price)
+console.log(booksByPrice);
+
+/*snack7*/
+
+const tagCounts = books.reduce((acc, curr) => { }, 0)
 
